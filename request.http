@@ -1,0 +1,10 @@
+POST http://localhost:8083/api/racuni
+Content-Type: application/json
+
+{
+  "rezervacijaId": 1,
+  "stavke": [
+    { "opis": "Nocenje 4 noci", "iznos": 2000.00 },
+    { "opis": "Boravisna taksa", "iznos": 1500.00 }
+  ]
+}
