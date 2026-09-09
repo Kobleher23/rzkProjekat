@@ -41,6 +41,13 @@
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
 
+		<!-- Klijent za Config server. Donosi podrsku za
+		     spring.config.import=configserver:... u application.properties -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+
 		<!-- Feign - deklarativni HTTP klijent ka drugim servisima -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
