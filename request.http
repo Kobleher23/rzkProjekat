@@ -1,10 +1,21 @@
-POST http://localhost:8083/api/racuni
+#POST http://localhost:8083/api/racuni
+#Content-Type: application/json
+#
+#{
+#  "rezervacijaId": 1,
+#  "stavke": [
+#    { "opis": "Nocenje 4 noci", "iznos": 2000.00 },
+#    { "opis": "Boravisna taksa", "iznos": 1500.00 }
+#  ]
+#}
+
+POST http://localhost:8081/api/hosteli
 Content-Type: application/json
 
 {
-  "rezervacijaId": 1,
-  "stavke": [
-    { "opis": "Nocenje 4 noci", "iznos": 2000.00 },
-    { "opis": "Boravisna taksa", "iznos": 1500.00 }
-  ]
+  "adresa": "Generala Drapsina",
+  "grad": "Kikinda",
+  "kontakt": "06355555",
+  "naziv": "Intermezzo",
+  "opis": "U jednoj od najlepsih ulica na svetu"
 }
