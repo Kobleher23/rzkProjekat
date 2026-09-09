@@ -1,6 +1,7 @@
 package rs.hostel.smestajservis.controller;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,13 +21,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/kreveti")
+@RequiredArgsConstructor
 public class KrevetController {
 
 	private final KrevetService krevetService;
-
-	public KrevetController(KrevetService krevetService) {
-		this.krevetService = krevetService;
-	}
 
 	/** Sa ?sobaId= vraca krevete te sobe, bez njega sve krevete. */
 	@GetMapping

@@ -1,6 +1,7 @@
 package rs.hostel.rezervacijaservis.controller;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,13 +19,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/gosti")
+@RequiredArgsConstructor
 public class GostController {
 
 	private final GostService gostService;
-
-	public GostController(GostService gostService) {
-		this.gostService = gostService;
-	}
 
 	@GetMapping
 	public List<Gost> sviGosti() {

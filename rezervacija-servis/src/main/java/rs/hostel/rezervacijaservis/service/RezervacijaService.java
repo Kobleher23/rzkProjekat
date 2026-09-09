@@ -1,5 +1,6 @@
 package rs.hostel.rezervacijaservis.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rs.hostel.rezervacijaservis.exception.BadRequestException;
@@ -13,13 +14,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class RezervacijaService {
 
 	private final RezervacijaRepository rezervacijaRepository;
-
-	public RezervacijaService(RezervacijaRepository rezervacijaRepository) {
-		this.rezervacijaRepository = rezervacijaRepository;
-	}
 
 	@Transactional(readOnly = true)
 	public List<Rezervacija> sveRezervacije() {

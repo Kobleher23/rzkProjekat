@@ -1,5 +1,6 @@
 package rs.hostel.smestajservis.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rs.hostel.smestajservis.dto.KrevetOdgovor;
@@ -19,19 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class SobaService {
 
 	private final SobaRepository sobaRepository;
 	private final HostelRepository hostelRepository;
 	private final TipSobeRepository tipSobeRepository;
-
-	public SobaService(SobaRepository sobaRepository,
-					   HostelRepository hostelRepository,
-					   TipSobeRepository tipSobeRepository) {
-		this.sobaRepository = sobaRepository;
-		this.hostelRepository = hostelRepository;
-		this.tipSobeRepository = tipSobeRepository;
-	}
 
 	// ---------- citanje ----------
 

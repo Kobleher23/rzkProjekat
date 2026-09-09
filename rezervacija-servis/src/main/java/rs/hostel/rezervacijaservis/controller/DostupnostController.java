@@ -1,5 +1,6 @@
 package rs.hostel.rezervacijaservis.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,13 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/dostupnost")
+@RequiredArgsConstructor
 public class DostupnostController {
 
 	private final DostupnostService dostupnostService;
-
-	public DostupnostController(DostupnostService dostupnostService) {
-		this.dostupnostService = dostupnostService;
-	}
 
 	/**
 	 * GET /api/dostupnost?hostelId=1&dolazak=2026-09-01&odlazak=2026-09-05

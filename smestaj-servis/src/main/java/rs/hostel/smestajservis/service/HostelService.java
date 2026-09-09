@@ -1,5 +1,6 @@
 package rs.hostel.smestajservis.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rs.hostel.smestajservis.exception.NotFoundException;
@@ -16,13 +17,10 @@ import java.util.List;
  * provere, transakcije, kasnije i Feign pozivi) ide ovde.
  */
 @Service
+@RequiredArgsConstructor
 public class HostelService {
 
 	private final HostelRepository hostelRepository;
-
-	public HostelService(HostelRepository hostelRepository) {
-		this.hostelRepository = hostelRepository;
-	}
 
 	// readOnly = true -> Hibernate zna da nema izmena, pa preskace
 	// proveru "prljavih" objekata na kraju transakcije (brze je).

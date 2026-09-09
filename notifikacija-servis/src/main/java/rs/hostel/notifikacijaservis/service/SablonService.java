@@ -1,5 +1,6 @@
 package rs.hostel.notifikacijaservis.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rs.hostel.notifikacijaservis.exception.BadRequestException;
@@ -11,13 +12,10 @@ import rs.hostel.notifikacijaservis.repository.SablonRepository;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class SablonService {
 
 	private final SablonRepository sablonRepository;
-
-	public SablonService(SablonRepository sablonRepository) {
-		this.sablonRepository = sablonRepository;
-	}
 
 	@Transactional(readOnly = true)
 	public List<Sablon> sviSabloni() {

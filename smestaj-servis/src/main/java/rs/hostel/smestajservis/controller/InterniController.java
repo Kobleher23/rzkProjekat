@@ -1,5 +1,6 @@
 package rs.hostel.smestajservis.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,13 +19,10 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/interni")
+@RequiredArgsConstructor
 public class InterniController {
 
 	private final KrevetService krevetService;
-
-	public InterniController(KrevetService krevetService) {
-		this.krevetService = krevetService;
-	}
 
 	/**
 	 * GET /api/interni/kreveti?hostelId=1

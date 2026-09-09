@@ -1,5 +1,6 @@
 package rs.hostel.rezervacijaservis.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rs.hostel.rezervacijaservis.exception.NotFoundException;
@@ -9,13 +10,10 @@ import rs.hostel.rezervacijaservis.repository.GostRepository;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class GostService {
 
 	private final GostRepository gostRepository;
-
-	public GostService(GostRepository gostRepository) {
-		this.gostRepository = gostRepository;
-	}
 
 	@Transactional(readOnly = true)
 	public List<Gost> sviGosti() {

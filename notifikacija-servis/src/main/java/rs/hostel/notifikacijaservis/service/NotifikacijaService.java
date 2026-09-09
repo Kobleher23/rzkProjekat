@@ -1,5 +1,6 @@
 package rs.hostel.notifikacijaservis.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,7 @@ import java.util.regex.Pattern;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class NotifikacijaService {
 
 	// Placeholder je bilo sta izmedju viticastih zagrada: {id}, {ime}, {iznos}...
@@ -29,14 +31,6 @@ public class NotifikacijaService {
 	private final NotifikacijaRepository notifikacijaRepository;
 	private final SablonRepository sablonRepository;
 	private final PodesavanjeRepository podesavanjeRepository;
-
-	public NotifikacijaService(NotifikacijaRepository notifikacijaRepository,
-							   SablonRepository sablonRepository,
-							   PodesavanjeRepository podesavanjeRepository) {
-		this.notifikacijaRepository = notifikacijaRepository;
-		this.sablonRepository = sablonRepository;
-		this.podesavanjeRepository = podesavanjeRepository;
-	}
 
 	// ---------- citanje istorije (obican CRUD) ----------
 

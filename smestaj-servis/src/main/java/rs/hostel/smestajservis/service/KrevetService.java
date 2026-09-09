@@ -1,5 +1,6 @@
 package rs.hostel.smestajservis.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rs.hostel.smestajservis.dto.KrevetInfoDTO;
@@ -14,18 +15,13 @@ import rs.hostel.smestajservis.repository.KrevetRepository;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class KrevetService {
 
 	private final KrevetRepository krevetRepository;
 	// Ponovo koristimo SobaService da bi se "soba ne postoji -> 404"
 	// pisalo na jednom mestu.
 	private final SobaService sobaService;
-
-	public KrevetService(KrevetRepository krevetRepository,
-						 SobaService sobaService) {
-		this.krevetRepository = krevetRepository;
-		this.sobaService = sobaService;
-	}
 
 	// ---------- postojece: hrani /api/interni/kreveti (Feign iz Rezervacije) ----------
 

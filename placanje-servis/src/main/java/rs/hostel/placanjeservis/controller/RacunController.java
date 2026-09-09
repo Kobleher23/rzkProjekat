@@ -1,6 +1,7 @@
 package rs.hostel.placanjeservis.controller;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,13 +22,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/racuni")
+@RequiredArgsConstructor
 public class RacunController {
 
 	private final PlacanjeService placanjeService;
-
-	public RacunController(PlacanjeService placanjeService) {
-		this.placanjeService = placanjeService;
-	}
 
 	@GetMapping
 	public List<Racun> sviRacuni() {

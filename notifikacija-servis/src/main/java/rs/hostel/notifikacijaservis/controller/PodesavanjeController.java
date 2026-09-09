@@ -1,6 +1,7 @@
 package rs.hostel.notifikacijaservis.controller;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,13 +20,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/podesavanja")
+@RequiredArgsConstructor
 public class PodesavanjeController {
 
 	private final PodesavanjeService podesavanjeService;
-
-	public PodesavanjeController(PodesavanjeService podesavanjeService) {
-		this.podesavanjeService = podesavanjeService;
-	}
 
 	@GetMapping
 	public List<Podesavanje> svaPodesavanja() {

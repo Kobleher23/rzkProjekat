@@ -1,6 +1,7 @@
 package rs.hostel.smestajservis.controller;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,13 +29,10 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/tipovi-soba")
+@RequiredArgsConstructor
 public class TipSobeController {
 
 	private final TipSobeService tipSobeService;
-
-	public TipSobeController(TipSobeService tipSobeService) {
-		this.tipSobeService = tipSobeService;
-	}
 
 	@GetMapping
 	public List<TipSobe> sviTipovi() {

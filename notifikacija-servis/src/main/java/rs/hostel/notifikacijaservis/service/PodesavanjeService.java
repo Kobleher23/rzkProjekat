@@ -1,5 +1,6 @@
 package rs.hostel.notifikacijaservis.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rs.hostel.notifikacijaservis.exception.BadRequestException;
@@ -10,13 +11,10 @@ import rs.hostel.notifikacijaservis.repository.PodesavanjeRepository;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class PodesavanjeService {
 
 	private final PodesavanjeRepository podesavanjeRepository;
-
-	public PodesavanjeService(PodesavanjeRepository podesavanjeRepository) {
-		this.podesavanjeRepository = podesavanjeRepository;
-	}
 
 	@Transactional(readOnly = true)
 	public List<Podesavanje> svaPodesavanja() {

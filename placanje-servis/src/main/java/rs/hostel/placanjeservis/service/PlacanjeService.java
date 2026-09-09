@@ -1,5 +1,6 @@
 package rs.hostel.placanjeservis.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,16 +22,11 @@ import java.util.List;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class PlacanjeService {
 
 	private final RacunRepository racunRepository;
 	private final UplataRepository uplataRepository;
-
-	public PlacanjeService(RacunRepository racunRepository,
-						   UplataRepository uplataRepository) {
-		this.racunRepository = racunRepository;
-		this.uplataRepository = uplataRepository;
-	}
 
 	// ---------- citanje (obican CRUD) ----------
 

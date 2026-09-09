@@ -1,6 +1,7 @@
 package rs.hostel.rezervacijaservis.service;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,16 +28,11 @@ import java.util.List;
  */
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class DostupnostService {
 
 	private final SmestajClient smestajClient;
 	private final RezervacijaRepository rezervacijaRepository;
-
-	public DostupnostService(SmestajClient smestajClient,
-							 RezervacijaRepository rezervacijaRepository) {
-		this.smestajClient = smestajClient;
-		this.rezervacijaRepository = rezervacijaRepository;
-	}
 
 	/**
 	 * name = "smestaj" mora da se poklapa sa imenom instance u

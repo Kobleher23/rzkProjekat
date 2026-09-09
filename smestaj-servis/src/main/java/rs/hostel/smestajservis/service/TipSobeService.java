@@ -1,5 +1,6 @@
 package rs.hostel.smestajservis.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rs.hostel.smestajservis.dto.TipSobeZahtev;
@@ -12,17 +13,12 @@ import rs.hostel.smestajservis.repository.TipSobeRepository;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TipSobeService {
 
 	private final TipSobeRepository tipSobeRepository;
 	// Potreban je da bi se pre brisanja proverilo koliko soba koristi tip.
 	private final SobaRepository sobaRepository;
-
-	public TipSobeService(TipSobeRepository tipSobeRepository,
-						  SobaRepository sobaRepository) {
-		this.tipSobeRepository = tipSobeRepository;
-		this.sobaRepository = sobaRepository;
-	}
 
 	@Transactional(readOnly = true)
 	public List<TipSobe> sviTipovi() {
