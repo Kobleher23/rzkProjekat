@@ -6,10 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * ULAZ za POST/PUT /api/kreveti.
- * Soba stize kao id - servis je ucitava i povezuje.
- */
 @Getter
 @Setter
 @NoArgsConstructor

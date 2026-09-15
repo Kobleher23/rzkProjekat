@@ -3,10 +3,10 @@ package rs.hostel.notifikacijaservis.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import rs.hostel.notifikacijaservis.enums.TipNotifikacije;
 import rs.hostel.notifikacijaservis.exception.BadRequestException;
 import rs.hostel.notifikacijaservis.exception.NotFoundException;
 import rs.hostel.notifikacijaservis.model.Sablon;
-import rs.hostel.notifikacijaservis.model.TipNotifikacije;
 import rs.hostel.notifikacijaservis.repository.SablonRepository;
 
 import java.util.List;
@@ -37,7 +37,6 @@ public class SablonService {
 	@Transactional
 	public Sablon kreiraj(Sablon sablon) {
 		sablon.setId(null);
-		// Tip je jedinstven - lepsa poruka nego da pukne constraint iz baze.
 		if (sablonRepository.existsByTip(sablon.getTip())) {
 			throw new BadRequestException(
 					"Sablon za tip " + sablon.getTip() + " vec postoji - izmenite postojeci");
@@ -48,8 +47,6 @@ public class SablonService {
 	@Transactional
 	public Sablon izmeni(Long id, Sablon izmenjeni) {
 		Sablon postojeci = nadjiPoId(id);
-		// Menjanje tipa bi moglo da napravi duplikat, pa proveravamo
-		// samo kada se tip zaista menja.
 		if (postojeci.getTip() != izmenjeni.getTip()
 				&& sablonRepository.existsByTip(izmenjeni.getTip())) {
 			throw new BadRequestException(

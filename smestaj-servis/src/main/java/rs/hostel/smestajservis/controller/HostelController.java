@@ -17,10 +17,7 @@ import rs.hostel.smestajservis.service.HostelService;
 
 import java.util.List;
 
-/**
- * Kontroler zna samo za HTTP: putanje, statuse, telo zahteva.
- * Svu logiku prosledjuje servisu.
- */
+
 @RestController
 @RequestMapping("/api/hosteli")
 @RequiredArgsConstructor
@@ -33,7 +30,7 @@ public class HostelController {
 		return hostelService.sviHosteli();
 	}
 
-	// Ako hostel ne postoji, servis baca NotFoundException -> Spring salje 404.
+
 	@GetMapping("/{id}")
 	public Hostel jedanHostel(@PathVariable Long id) {
 		return hostelService.nadjiPoId(id);

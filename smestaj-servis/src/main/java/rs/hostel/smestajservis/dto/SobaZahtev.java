@@ -6,14 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * ULAZ za POST/PUT /api/sobe.
- *
- * Hostel i TipSobe stizu kao ID-jevi, a ne kao ugnezdeni objekti. Klijent
- * time NE moze da izmeni hostel ili tip sobe usput - servis ih ucitava iz
- * baze po id-ju i povezuje. Da smo primali cele objekte, Hibernate bi mogao
- * da prepise postojeci hostel poljima koja klijent posalje.
- */
 @Getter
 @Setter
 @NoArgsConstructor

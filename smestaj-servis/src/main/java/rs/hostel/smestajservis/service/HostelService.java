@@ -9,21 +9,12 @@ import rs.hostel.smestajservis.repository.HostelRepository;
 
 import java.util.List;
 
-/**
- * Servisni sloj - ovde zivi poslovna logika.
- *
- * Kontroler treba samo da prima HTTP zahtev i vraca odgovor;
- * repozitorijum treba samo da prica sa bazom. Sve izmedju (pravila,
- * provere, transakcije, kasnije i Feign pozivi) ide ovde.
- */
 @Service
 @RequiredArgsConstructor
 public class HostelService {
 
 	private final HostelRepository hostelRepository;
 
-	// readOnly = true -> Hibernate zna da nema izmena, pa preskace
-	// proveru "prljavih" objekata na kraju transakcije (brze je).
 	@Transactional(readOnly = true)
 	public List<Hostel> sviHosteli() {
 		return hostelRepository.findAll();
@@ -37,8 +28,6 @@ public class HostelService {
 
 	@Transactional
 	public Hostel kreiraj(Hostel hostel) {
-		// Novi hostel ne sme da nosi id sa sobom - inace bi save() uradio
-		// izmenu postojeceg umesto da napravi novi zapis.
 		hostel.setId(null);
 		return hostelRepository.save(hostel);
 	}

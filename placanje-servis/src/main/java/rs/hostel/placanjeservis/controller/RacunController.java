@@ -42,20 +42,12 @@ public class RacunController {
 		return placanjeService.racuniZaRezervaciju(rezervacijaId);
 	}
 
-	/**
-	 * SLOZENA OPERACIJA: kreiranje racuna iz liste stavki.
-	 * Ukupan iznos racuna servis izvodi sam - ne salje ga klijent.
-	 */
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Racun kreiraj(@Valid @RequestBody KreirajRacunZahtev zahtev) {
 		return placanjeService.kreirajRacun(zahtev);
 	}
 
-	/**
-	 * SLOZENA OPERACIJA: evidentiranje uplate.
-	 * Vraca AZURIRAN racun, da klijent odmah vidi da li je presao u PLACEN.
-	 */
 	@PostMapping("/{id}/uplate")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Racun evidentirajUplatu(@PathVariable Long id,

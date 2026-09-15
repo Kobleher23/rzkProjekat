@@ -11,54 +11,52 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import rs.hostel.placanjeservis.enums.StatusRacuna;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@Entity
+@Table(name = "racun")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Racun {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false)
 	private Long id;
 
-	// PAZNJA: obican Long, NE relacija - rezervacija zivi u bazi
-	// rezervacija-servisa (hostel_rezervacija). Ovde cuvamo samo referencu.
-	private Long rezervacijaId;
-
-	// Ukupan iznos racuna. NE postavlja ga klijent - servis ga racuna
-	// kao zbir stavki, da klijent ne bi mogao da posalje pogresan total.
-	@Column(precision = 10, scale = 2)
-	private BigDecimal iznos;
-
-	// EnumType.STRING -> u bazi stoji tekst "NEPLACEN", a ne redni broj.
-	// Da je ORDINAL, ubacivanje nove vrednosti u sredinu enum-a bi
-	// promenilo znacenje vec upisanih redova.
-	@Enumerated(EnumType.STRING)
-	@Column(length = 20)
-	private StatusRacuna status = StatusRacuna.NEPLACEN;
-
+	@Column(name = "datum_kreiranja")
 	private LocalDateTime datumKreiranja;
 
-	// Jedan racun ima vise stavki. Vlasnik veze je StavkaRacuna (polje "racun"),
-	// zato mappedBy. CascadeType.ALL -> cuvanje racuna cuva i njegove stavke.
+
+	@Column(name = "iznos", precision = 10, scale = 2)
+	private BigDecimal iznos;
+
+
+	@Column(name = "rezervacija_id")
+	private Long rezervacijaId;
+
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status")
+	private StatusRacuna status = StatusRacuna.NEPLACEN;
+
 	@OneToMany(mappedBy = "racun", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<StavkaRacuna> stavke = new ArrayList<>();
 
-	// Jedan racun ima vise uplata (placanje u ratama, ili neuspeli pokusaji).
 	@OneToMany(mappedBy = "racun", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Uplata> uplate = new ArrayList<>();
 
-	// Poziva se automatski pre prvog upisa u bazu.
 	@PrePersist
 	public void preUpisa() {
 		if (datumKreiranja == null) {

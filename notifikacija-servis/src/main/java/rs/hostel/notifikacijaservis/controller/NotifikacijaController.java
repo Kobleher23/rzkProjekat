@@ -25,10 +25,6 @@ public class NotifikacijaController {
 
 	private final NotifikacijaService notifikacijaService;
 
-	/**
-	 * SLOZENA OPERACIJA: sastavi poruku iz sablona, proveri preferencu
-	 * primaoca, "posalji" je i zabelezi ishod.
-	 */
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Notifikacija posalji(@Valid @RequestBody PosaljiNotifikacijuZahtev zahtev) {
@@ -36,7 +32,6 @@ public class NotifikacijaController {
 				zahtev.getEmail(), zahtev.getTip(), zahtev.getParametri());
 	}
 
-	// Istorija svih poslatih (i odbijenih) obavestenja.
 	@GetMapping
 	public List<Notifikacija> istorija() {
 		return notifikacijaService.sveNotifikacije();

@@ -10,41 +10,37 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@Entity
+@Table(name = "stavka_rezervacije")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class StavkaRezervacije {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false)
 	private Long id;
 
-	// Vise stavki pripada jednoj rezervaciji. Rezervacija je u OVOJ bazi,
-	// pa je ovo prava JPA relacija (kolona rezervacija_id kao strani kljuc).
-	//
-	// @JsonIgnore prekida beskonacnu petlju pri slanju JSON-a:
-	// Rezervacija -> stavke -> rezervacija -> stavke -> ...
-	// Stavka se ionako uvek prikazuje UNUTAR svoje rezervacije, pa je
-	// ta povratna referenca u JSON-u suvisna.
+	@Column(name = "cena", precision = 10, scale = 2)
+	private BigDecimal cena;
+
+	@Column(name = "krevet_id")
+	private Long krevetId;
+
+	@Column(name = "tip_sobe_id")
+	private Long tipSobeId;
+
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "rezervacija_id")
 	private Rezervacija rezervacija;
-
-	// PAZNJA: obicni Long-ovi, NE relacije - krevet i tip sobe zive
-	// u bazi smestaj-servisa. Ovde cuvamo samo referencu (ID).
-	private Long krevetId;
-
-	private Long tipSobeId;
-
-	@Column(precision = 10, scale = 2)
-	private BigDecimal cena;
 }

@@ -7,6 +7,5 @@ import java.util.Optional;
 
 public interface PodesavanjeRepository extends JpaRepository<Podesavanje, Long> {
 
-	// Prazan Optional znaci "nema zapisa" -> podrazumevano je slanje dozvoljeno.
 	Optional<Podesavanje> findByEmail(String email);
 }

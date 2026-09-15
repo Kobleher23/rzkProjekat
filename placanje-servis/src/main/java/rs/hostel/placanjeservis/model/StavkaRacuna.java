@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -19,32 +20,30 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@Entity
+@Table(name = "stavka_racuna")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class StavkaRacuna {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false)
 	private Long id;
 
-	// Vise stavki pripada jednom racunu. Racun je u OVOJ bazi,
-	// pa je ovo prava JPA relacija (kolona racun_id kao strani kljuc).
-	//
-	// @JsonIgnore prekida beskonacnu petlju pri slanju JSON-a:
-	// Racun -> stavke -> racun -> stavke -> ...
+	@NotNull(message = "Iznos stavke je obavezan")
+	@Positive(message = "Iznos stavke mora biti veci od nule")
+	@Column(name = "iznos", nullable = false, precision = 10, scale = 2)
+	private BigDecimal iznos;
+
+	@NotBlank(message = "Opis stavke je obavezan")
+	@Column(name = "opis", nullable = false)
+	private String opis;
+
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "racun_id")
 	private Racun racun;
-
-	@NotBlank(message = "Opis stavke je obavezan")
-	private String opis;
-
-	@NotNull(message = "Iznos stavke je obavezan")
-	@Positive(message = "Iznos stavke mora biti veci od nule")
-	@Column(precision = 10, scale = 2)
-	private BigDecimal iznos;
 }

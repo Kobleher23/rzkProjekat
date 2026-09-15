@@ -6,17 +6,11 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import rs.hostel.notifikacijaservis.model.TipNotifikacije;
+import rs.hostel.notifikacijaservis.enums.TipNotifikacije;
 
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Telo zahteva za POST /api/notifikacije.
- *
- * Klijent NE salje gotov tekst poruke - salje tip (koji bira sablon)
- * i mapu parametara kojima se popunjavaju placeholderi u sablonu.
- */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -29,7 +23,5 @@ public class PosaljiNotifikacijuZahtev {
 	@NotNull(message = "Tip notifikacije je obavezan")
 	private TipNotifikacije tip;
 
-	// Kljucevi odgovaraju placeholderima u sablonu bez zagrada:
-	// telo "rezervacija {id}" + parametri {"id": "42"} -> "rezervacija 42".
 	private Map<String, String> parametri = new HashMap<>();
 }

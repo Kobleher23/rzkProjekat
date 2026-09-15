@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import rs.hostel.rezervacijaservis.dto.KreiranjeRezervacijeZahtev;
+import rs.hostel.rezervacijaservis.dto.RezervacijaOdgovorDTO;
 import rs.hostel.rezervacijaservis.model.Rezervacija;
 import rs.hostel.rezervacijaservis.service.RezervacijaService;
 
@@ -39,8 +41,8 @@ public class RezervacijaController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Rezervacija kreiraj(@Valid @RequestBody Rezervacija rezervacija) {
-		return rezervacijaService.kreiraj(rezervacija);
+	public RezervacijaOdgovorDTO kreiraj(@Valid @RequestBody KreiranjeRezervacijeZahtev zahtev) {
+		return rezervacijaService.kreirajRezervaciju(zahtev);
 	}
 
 	@PutMapping("/{id}")
@@ -55,18 +57,11 @@ public class RezervacijaController {
 		rezervacijaService.obrisi(id);
 	}
 
-	/**
-	 * Otkazivanje - menja status u OTKAZANA umesto brisanja.
-	 * PUT /api/rezervacije/{id}/otkazi
-	 */
 	@PutMapping("/{id}/otkazi")
 	public Rezervacija otkazi(@PathVariable Long id) {
 		return rezervacijaService.otkazi(id);
 	}
 
-	/**
-	 * GET /api/rezervacije/preklapanja?krevetId=1&dolazak=2026-09-01&odlazak=2026-09-05
-	 */
 	@GetMapping("/preklapanja")
 	public List<Rezervacija> preklapanja(
 			@RequestParam Long krevetId,
@@ -75,9 +70,6 @@ public class RezervacijaController {
 		return rezervacijaService.nadjiPreklapajuce(krevetId, dolazak, odlazak);
 	}
 
-	/**
-	 * GET /api/rezervacije/slobodan?krevetId=1&dolazak=2026-09-01&odlazak=2026-09-05
-	 */
 	@GetMapping("/slobodan")
 	public boolean slobodan(
 			@RequestParam Long krevetId,

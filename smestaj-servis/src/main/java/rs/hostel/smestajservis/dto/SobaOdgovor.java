@@ -9,14 +9,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * IZLAZ za sobu.
- *
- * Entitet Soba ima tri relacije (hostel, tipSobe, kreveti). Ovde su
- * spljostene: hostel i tip idu kao id + naziv, a kreveti kao lista
- * ravnih KrevetOdgovor objekata. Pozivalac dobija sve sto mu treba
- * u jednom odgovoru, a mi ostajemo slobodni da menjamo entitete.
- */
 @Getter
 @Setter
 @NoArgsConstructor

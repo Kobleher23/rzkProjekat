@@ -19,10 +19,6 @@ public class DostupnostController {
 
 	private final DostupnostService dostupnostService;
 
-	/**
-	 * GET /api/dostupnost?hostelId=1&dolazak=2026-09-01&odlazak=2026-09-05
-	 * Vraca krevete koji su slobodni u celom trazenom terminu.
-	 */
 	@GetMapping
 	public List<KrevetDTO> dostupni(
 			@RequestParam Long hostelId,

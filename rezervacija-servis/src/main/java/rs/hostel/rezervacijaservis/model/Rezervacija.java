@@ -14,10 +14,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import rs.hostel.rezervacijaservis.enums.StatusRezervacije;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -25,51 +27,49 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@Entity
+@Table(name = "rezervacija")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Rezervacija {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false)
 	private Long id;
 
-	// Vise rezervacija moze pripadati istom gostu. Gost je u OVOJ bazi,
-	// pa je ovo prava JPA relacija (kolona gost_id kao strani kljuc).
+	@NotNull(message = "Datum dolaska je obavezan")
+	@Column(name = "datum_dolaska", nullable = false)
+	private LocalDate datumDolaska;
+
+	@Column(name = "datum_kreiranja")
+	private LocalDateTime datumKreiranja;
+
+	@NotNull(message = "Datum odlaska je obavezan")
+	@Column(name = "datum_odlaska", nullable = false)
+	private LocalDate datumOdlaska;
+
+	@Column(name = "hostel_id")
+	private Long hostelId;
+
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status")
+	private StatusRezervacije status = StatusRezervacije.KREIRANA;
+
+	@Column(name = "ukupna_cena", precision = 10, scale = 2)
+	private BigDecimal ukupnaCena;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "gost_id")
 	private Gost gost;
 
-	// PAZNJA: obican Long, NE relacija - hostel zivi u bazi smestaj-servisa.
-	// Detaljno objasnjenje je u sazetku ispod.
-	private Long hostelId;
 
-	@NotNull(message = "Datum dolaska je obavezan")
-	private LocalDate datumDolaska;
-
-	@NotNull(message = "Datum odlaska je obavezan")
-	private LocalDate datumOdlaska;
-
-	// EnumType.STRING -> u bazi stoji tekst "POTVRDJENA", a ne broj 1.
-	// Zasto: ako kasnije ubacimo novu vrednost u sredinu enum-a, brojevi bi se
-	// pomerili i stari redovi bi odjednom znacili nesto drugo. Tekst je stabilan.
-	@Enumerated(EnumType.STRING)
-	@Column(length = 20)
-	private StatusRezervacije status = StatusRezervacije.KREIRANA;
-
-	@Column(precision = 10, scale = 2)
-	private BigDecimal ukupnaCena;
-
-	private LocalDateTime datumKreiranja;
-
-	// Jedna rezervacija ima vise stavki (po jedan krevet po stavci).
-	// Vlasnik veze je StavkaRezervacije (polje "rezervacija") -> zato mappedBy.
 	@OneToMany(mappedBy = "rezervacija", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<StavkaRezervacije> stavke = new ArrayList<>();
 
-	// Poziva se automatski pre prvog upisa u bazu.
 	@PrePersist
 	public void preUpisa() {
 		if (datumKreiranja == null) {

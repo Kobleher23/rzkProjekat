@@ -1,16 +1,11 @@
 package rs.hostel.placanjeservis.exception;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-/**
- * Baca se kada trazeni zapis ne postoji.
- * @ResponseStatus automatski pretvara ovaj izuzetak u HTTP 404.
- */
-@ResponseStatus(HttpStatus.NOT_FOUND)
+@Getter
+@AllArgsConstructor
 public class NotFoundException extends RuntimeException {
 
-	public NotFoundException(String poruka) {
-		super(poruka);
-	}
+	private String message;
 }

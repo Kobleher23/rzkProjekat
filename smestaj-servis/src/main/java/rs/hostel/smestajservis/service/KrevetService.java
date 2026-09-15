@@ -19,11 +19,7 @@ import java.util.List;
 public class KrevetService {
 
 	private final KrevetRepository krevetRepository;
-	// Ponovo koristimo SobaService da bi se "soba ne postoji -> 404"
-	// pisalo na jednom mestu.
 	private final SobaService sobaService;
-
-	// ---------- postojece: hrani /api/interni/kreveti (Feign iz Rezervacije) ----------
 
 	@Transactional(readOnly = true)
 	public List<KrevetInfoDTO> kreveiPoHostelu(Long hostelId) {
@@ -32,11 +28,8 @@ public class KrevetService {
 				.toList();
 	}
 
-	// ---------- CRUD (Faza 5A.5) ----------
-
 	@Transactional(readOnly = true)
 	public List<KrevetOdgovor> kreveti(Long sobaId) {
-		// sobaId je opcion: bez njega vracamo sve krevete.
 		List<Krevet> kreveti = (sobaId == null)
 				? krevetRepository.findAll()
 				: krevetRepository.findBySobaIdOrderById(sobaId);
@@ -50,8 +43,6 @@ public class KrevetService {
 
 	@Transactional
 	public KrevetOdgovor kreiraj(KrevetZahtev zahtev) {
-		// Id sobe se pretvara u pravi entitet; ako soba ne postoji,
-		// SobaService baca NotFoundException -> 404.
 		Soba soba = sobaService.nadjiEntitet(zahtev.getSobaId());
 
 		Krevet krevet = new Krevet();
@@ -61,13 +52,6 @@ public class KrevetService {
 		return uOdgovor(krevetRepository.save(krevet));
 	}
 
-	/**
-	 * Menja se SAMO oznaka.
-	 *
-	 * Premestanje kreveta u drugu sobu bi promenilo koliko je koja soba
-	 * popunjena, a krevet je vec mozda rezervisan preko svog id-ja u
-	 * Rezervacija servisu - zato to namerno nije podrzano.
-	 */
 	@Transactional
 	public KrevetOdgovor izmeni(Long id, KrevetZahtev zahtev) {
 		Krevet krevet = nadjiEntitet(id);
@@ -80,8 +64,6 @@ public class KrevetService {
 		Krevet krevet = nadjiEntitet(id);
 		krevetRepository.delete(krevet);
 	}
-
-	// ---------- pomocne ----------
 
 	private Krevet nadjiEntitet(Long id) {
 		return krevetRepository.findById(id)

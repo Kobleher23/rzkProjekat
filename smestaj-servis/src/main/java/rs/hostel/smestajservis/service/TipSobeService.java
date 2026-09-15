@@ -17,7 +17,6 @@ import java.util.List;
 public class TipSobeService {
 
 	private final TipSobeRepository tipSobeRepository;
-	// Potreban je da bi se pre brisanja proverilo koliko soba koristi tip.
 	private final SobaRepository sobaRepository;
 
 	@Transactional(readOnly = true)
@@ -45,14 +44,6 @@ public class TipSobeService {
 		return tipSobeRepository.save(postojeci);
 	}
 
-	/**
-	 * GUARDED DELETE.
-	 *
-	 * Tip sobe je referenca koju sobe dele. Obicno brisanje bi ili puklo
-	 * na stranom kljucu (ruzna SQL greska klijentu), ili - da je veza
-	 * postavljena sa cascade - povuklo za sobom i sobe. Zato prvo brojimo
-	 * ko ga koristi, pa odbijamo sa 409 i konkretnim brojem u poruci.
-	 */
 	@Transactional
 	public void obrisi(Long id) {
 		TipSobe tip = nadjiPoId(id);
@@ -68,8 +59,6 @@ public class TipSobeService {
 		tipSobeRepository.deleteById(id);
 	}
 
-	// Kopiranje polje-po-polje iz DTO-a u entitet. Namerno rucno:
-	// tako je ocigledno koja polja klijent sme da menja, a koja ne (id).
 	private void primeni(TipSobe tip, TipSobeZahtev zahtev) {
 		tip.setNaziv(zahtev.getNaziv());
 		tip.setKapacitet(zahtev.getKapacitet());

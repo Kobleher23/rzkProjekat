@@ -27,7 +27,6 @@ public class SobaController {
 
 	private final SobaService sobaService;
 
-	/** Sa ?hostelId= vraca sobe tog hostela, bez njega sve sobe. */
 	@GetMapping
 	public List<SobaOdgovor> sobe(@RequestParam(required = false) Long hostelId) {
 		return sobaService.sveSobe(hostelId);
@@ -44,10 +43,6 @@ public class SobaController {
 		return sobaService.kreiraj(zahtev);
 	}
 
-	/**
-	 * KONVENIJENCIJA: soba + kreveti u jednom pozivu.
-	 * Kreveti se zadaju ili listom oznaka ili brojem.
-	 */
 	@PostMapping("/sa-krevetima")
 	@ResponseStatus(HttpStatus.CREATED)
 	public SobaOdgovor kreirajSaKrevetima(@Valid @RequestBody SobaSaKrevetimaZahtev zahtev) {
@@ -60,7 +55,6 @@ public class SobaController {
 		return sobaService.izmeni(id, zahtev);
 	}
 
-	/** Brise sobu i sve njene krevete (cascade). */
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void obrisi(@PathVariable Long id) {

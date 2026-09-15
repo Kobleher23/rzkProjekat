@@ -18,15 +18,6 @@ import rs.hostel.smestajservis.service.TipSobeService;
 
 import java.util.List;
 
-/**
- * Ulaz je TipSobeZahtev, ali IZLAZ je goli entitet TipSobe - namerno.
- * TipSobe nema nijednu relaciju (naziv, kapacitet, cena, deljena su
- * prosta polja), pa nema sta da se ulancava i izlazni DTO ne bi doneo
- * nista osim jos jedne klase za odrzavanje.
- *
- * Nema try/catch: greske baca servis, a u HTTP odgovore ih pretvara
- * GlobalniObradjivacGresaka.
- */
 @RestController
 @RequestMapping("/api/tipovi-soba")
 @RequiredArgsConstructor
@@ -56,7 +47,6 @@ public class TipSobeController {
 		return tipSobeService.izmeni(id, zahtev);
 	}
 
-	/** Guarded delete: 409 ako tip jos koristi bar jedna soba. */
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void obrisi(@PathVariable Long id) {

@@ -7,13 +7,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
-/**
- * Podaci o jednom krevetu koje Smestaj servis salje drugim servisima.
- *
- * Ovo je "ravan" prikaz - spojeni podaci iz krevet -> soba -> tip_sobe,
- * bez JPA relacija i bez ulancanih objekata. Tako pozivalac dobija tacno
- * ono sto mu treba, a mi ostajemo slobodni da menjamo svoje entitete.
- */
+
 @Getter
 @Setter
 @NoArgsConstructor

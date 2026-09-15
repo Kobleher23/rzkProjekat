@@ -7,7 +7,5 @@ import java.util.List;
 
 public interface RacunRepository extends JpaRepository<Racun, Long> {
 
-	// Spring Data izvodi upit iz imena metode - nije potreban @Query.
-	// Koristi se kada nas zanima sta je sve naplaceno za jednu rezervaciju.
 	List<Racun> findByRezervacijaId(Long rezervacijaId);
 }

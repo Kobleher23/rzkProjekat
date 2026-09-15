@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import rs.hostel.notifikacijaservis.enums.TipNotifikacije;
 import rs.hostel.notifikacijaservis.model.Sablon;
-import rs.hostel.notifikacijaservis.model.TipNotifikacije;
 import rs.hostel.notifikacijaservis.service.SablonService;
 
 import java.util.List;

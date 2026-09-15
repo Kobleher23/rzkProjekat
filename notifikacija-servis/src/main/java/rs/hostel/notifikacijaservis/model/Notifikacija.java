@@ -10,46 +10,45 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import rs.hostel.notifikacijaservis.enums.StatusNotifikacije;
+import rs.hostel.notifikacijaservis.enums.TipNotifikacije;
 
 import java.time.LocalDateTime;
 
-/**
- * Istorija - jedan red po pokusaju slanja.
- *
- * Sadrzaj se cuva POPUNJEN (posle zamene placeholdera), a ne kao referenca
- * na sablon. Razlog: sablon se vremenom menja, a mi moramo da znamo sta je
- * tacno pisalo u poruci koja je stvarno otisla gostu.
- */
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@Entity
+@Table(name = "notifikacija")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Notifikacija {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false)
 	private Long id;
 
+	@Column(name = "datum")
+	private LocalDateTime datum;
+
+	@Column(name = "primalac_email")
 	private String primalacEmail;
 
-	@Enumerated(EnumType.STRING)
-	@Column(length = 30)
-	private TipNotifikacije tip;
-
-	// @Lob -> u MySQL-u postaje TEXT umesto VARCHAR(255),
-	// jer popunjena poruka lako prelazi 255 karaktera.
 	@Lob
+	@Column(name = "sadrzaj", columnDefinition = "longtext")
 	private String sadrzaj;
 
 	@Enumerated(EnumType.STRING)
-	@Column(length = 20)
+	@Column(name = "status")
 	private StatusNotifikacije status;
 
-	private LocalDateTime datum;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "tip")
+	private TipNotifikacije tip;
 
 	@PrePersist
 	public void preUpisa() {

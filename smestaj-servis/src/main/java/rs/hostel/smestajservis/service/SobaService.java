@@ -27,12 +27,8 @@ public class SobaService {
 	private final HostelRepository hostelRepository;
 	private final TipSobeRepository tipSobeRepository;
 
-	// ---------- citanje ----------
-
 	@Transactional(readOnly = true)
 	public List<SobaOdgovor> sveSobe(Long hostelId) {
-		// hostelId je opcion: bez njega vracamo sve sobe, sa njim samo
-		// sobe tog hostela.
 		List<Soba> sobe = (hostelId == null)
 				? sobaRepository.nadjiSveSaDetaljima()
 				: sobaRepository.nadjiPoHostelu(hostelId);
@@ -44,7 +40,6 @@ public class SobaService {
 		return uOdgovor(nadjiEntitet(id));
 	}
 
-	// ---------- pisanje ----------
 
 	@Transactional
 	public SobaOdgovor kreiraj(SobaZahtev zahtev) {
@@ -52,21 +47,12 @@ public class SobaService {
 		soba.setBrojSobe(zahtev.getBrojSobe());
 		soba.setSprat(zahtev.getSprat());
 
-		// Kljucni korak: id-jevi iz zahteva se pretvaraju u PRAVE entitete
-		// iz baze. Ako neki ne postoji, staje ovde sa 404 - soba se nikad
-		// ne sacuva polupovezana.
 		soba.setHostel(nadjiHostel(zahtev.getHostelId()));
 		soba.setTipSobe(nadjiTip(zahtev.getTipSobeId()));
 
 		return uOdgovor(sobaRepository.save(soba));
 	}
 
-	/**
-	 * KONVENIJENCIJA: soba + njeni kreveti u jednom pozivu.
-	 *
-	 * Sve se desava u JEDNOJ transakciji - ako bilo sta pukne (nepostojeci
-	 * hostel, los tip), ne ostaje ni soba ni polovina kreveta.
-	 */
 	@Transactional
 	public SobaOdgovor kreirajSaKrevetima(SobaSaKrevetimaZahtev zahtev) {
 		Soba soba = new Soba();
@@ -78,8 +64,6 @@ public class SobaService {
 		for (String oznaka : oznakeZa(zahtev)) {
 			Krevet krevet = new Krevet();
 			krevet.setOznaka(oznaka);
-			// Obe strane veze: krevet pokazuje na sobu (kolona soba_id),
-			// a soba drzi krevet u listi da bi ga cascade sacuvao.
 			krevet.setSoba(soba);
 			soba.getKreveti().add(krevet);
 		}
@@ -93,8 +77,6 @@ public class SobaService {
 		soba.setBrojSobe(zahtev.getBrojSobe());
 		soba.setSprat(zahtev.getSprat());
 
-		// Tip sobe se menja samo ako je poslat drugi id - nema smisla
-		// raditi upit u bazu kad se nista ne menja.
 		if (zahtev.getTipSobeId() != null
 				&& !zahtev.getTipSobeId().equals(soba.getTipSobe().getId())) {
 			soba.setTipSobe(nadjiTip(zahtev.getTipSobeId()));
@@ -103,20 +85,11 @@ public class SobaService {
 		return uOdgovor(sobaRepository.save(soba));
 	}
 
-	/**
-	 * Brise sobu i njene krevete.
-	 *
-	 * Krevete ne brisemo rucno: veza Soba -> kreveti ima cascade = ALL i
-	 * orphanRemoval = true, pa Hibernate sam izda DELETE za svaki krevet
-	 * pre nego sto obrise sobu.
-	 */
 	@Transactional
 	public void obrisi(Long id) {
 		Soba soba = nadjiEntitet(id);
 		sobaRepository.delete(soba);
 	}
-
-	// ---------- pomocne ----------
 
 	@Transactional(readOnly = true)
 	public Soba nadjiEntitet(Long id) {
@@ -136,11 +109,6 @@ public class SobaService {
 						"Tip sobe sa id " + tipSobeId + " ne postoji"));
 	}
 
-	/**
-	 * Vraca oznake kreveta: ili tacno one koje je klijent poslao, ili
-	 * automatski generisane A, B, C... Validacija (@AssertTrue u zahtevu)
-	 * je vec obezbedila da je zadato tacno jedno od to dvoje.
-	 */
 	private List<String> oznakeZa(SobaSaKrevetimaZahtev zahtev) {
 		if (zahtev.getOznakeKreveta() != null && !zahtev.getOznakeKreveta().isEmpty()) {
 			return zahtev.getOznakeKreveta();
@@ -152,7 +120,6 @@ public class SobaService {
 		return oznake;
 	}
 
-	// 0 -> "A", 1 -> "B", ... 25 -> "Z", pa dalje "K27", "K28"...
 	private String oznakaZaRedniBroj(int redniBroj) {
 		if (redniBroj < 26) {
 			return String.valueOf((char) ('A' + redniBroj));
@@ -160,7 +127,7 @@ public class SobaService {
 		return "K" + (redniBroj + 1);
 	}
 
-	// Spljostavanje entiteta u ravan odgovor - bez ulancanih objekata.
+
 	private SobaOdgovor uOdgovor(Soba soba) {
 		Hostel hostel = soba.getHostel();
 		TipSobe tip = soba.getTipSobe();

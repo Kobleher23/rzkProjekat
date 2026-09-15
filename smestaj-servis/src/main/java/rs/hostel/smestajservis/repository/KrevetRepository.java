@@ -19,6 +19,5 @@ public interface KrevetRepository extends JpaRepository<Krevet, Long> {
 			""")
 	List<Krevet> nadjiPoHostelu(@Param("hostelId") Long hostelId);
 
-	// Svi kreveti jedne sobe - za GET /api/kreveti?sobaId=
 	List<Krevet> findBySobaIdOrderById(Long sobaId);
 }

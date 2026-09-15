@@ -9,11 +9,6 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
-/**
- * Jedna stavka onako kako je klijent salje pri kreiranju racuna.
- * Namerno NIJE entitet StavkaRacuna - klijent ne sme da postavlja
- * id ni referencu na racun, to radi servis.
- */
 @Getter
 @Setter
 @NoArgsConstructor

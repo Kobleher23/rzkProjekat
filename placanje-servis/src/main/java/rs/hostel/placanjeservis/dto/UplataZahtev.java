@@ -5,14 +5,10 @@ import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import rs.hostel.placanjeservis.model.NacinPlacanja;
+import rs.hostel.placanjeservis.enums.NacinPlacanja;
 
 import java.math.BigDecimal;
 
-/**
- * Telo zahteva za POST /api/racuni/{id}/uplate.
- * Id racuna se NE salje u telu - stize iz putanje.
- */
 @Getter
 @Setter
 @NoArgsConstructor

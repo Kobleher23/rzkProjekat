@@ -26,7 +26,6 @@ public class KrevetController {
 
 	private final KrevetService krevetService;
 
-	/** Sa ?sobaId= vraca krevete te sobe, bez njega sve krevete. */
 	@GetMapping
 	public List<KrevetOdgovor> kreveti(@RequestParam(required = false) Long sobaId) {
 		return krevetService.kreveti(sobaId);
